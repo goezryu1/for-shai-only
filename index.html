@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Happy New Year, My Love</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ---------------- RESET ---------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(180deg, #ffe6f0, #ffd1e8);
+  color: #5a2a3c;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------------- PETALS ---------------- */
+.petal {
+  position: fixed;
+  top: -10%;
+  opacity: 0.75;
+  pointer-events: none;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(120vh) rotate(360deg);
+  }
+}
+
+/* ---------------- HERO ---------------- */
+.hero {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(255,255,255,0.85);
+  border-radius: 28px;
+  padding: 34px 24px;
+  box-shadow: 0 20px 45px rgba(255,105,180,0.25);
+  animation: fadeUp 1.5s ease;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card h1 {
+  font-family: 'Playfair Display', serif;
+  color: #c2185b;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  margin-bottom: 14px;
+}
+
+.card p {
+  font-size: clamp(0.95rem, 2.8vw, 1.1rem);
+  line-height: 1.8;
+}
+
+/* ---------------- COUNTDOWN ---------------- */
+.countdown {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 26px 0;
+}
+
+.time {
+  background: #ffe0ec;
+  padding: 14px 8px;
+  border-radius: 16px;
+}
+
+.time h2 {
+  color: #ad1457;
+  font-size: 1.6rem;
+}
+
+.time span {
+  font-size: 0.75rem;
+}
+
+/* ---------------- SECTIONS ---------------- */
+.section, .question {
+  display: none; /* hidden initially */
+  padding: 70px 22px;
+  text-align: center;
+}
+
+.section h2, .question h2 {
+  font-family: 'Playfair Display', serif;
+  color: #ad1457;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  margin-bottom: 18px;
+}
+
+.section p {
+  max-width: 600px;
+  margin: auto;
+  line-height: 1.8;
+  font-size: 1rem;
+}
+
+.question {
+  background: linear-gradient(135deg, #ffc1dd, #ff9acb);
+  border-radius: 30px;
+  padding: 44px 24px;
+  margin: 40px auto;
+  max-width: 420px;
+  box-shadow: 0 18px 40px rgba(194,24,91,0.3);
+  text-align: center;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+button {
+  min-height: 48px;
+  padding: 14px 30px;
+  border-radius: 30px;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+.yes {
+  background: #fff;
+  color: #c2185b;
+}
+
+.no {
+  background: rgba(255,255,255,0.4);
+  color: #fff;
+}
+
+#response {
+  margin-top: 18px;
+  color: #fff;
+  font-size: 1.05rem;
+}
+
+/* ---------------- FOOTER ---------------- */
+footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 0.8rem;
+  color: #7a3a55;
+}
+
+/* ---------------- DESKTOP ENHANCEMENT ---------------- */
+@media (min-width: 768px) {
+  .card {
+    max-width: 520px;
+    padding: 50px 40px;
+  }
+  .section, .question {
+    padding: 100px 20px;
+  }
+}
+
+/* ---------------- FADE-SLIDE ANIMATION ---------------- */
+@keyframes fadeSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.showAnimated {
+  display: block !important;
+  animation: fadeSlideUp 1.2s ease forwards;
+}
+</style>
+</head>
+<body>
+
+<!-- 🎵 MUSIC -->
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- 🌸 SAFE SVG PETALS -->
+<script>
+const petalSVG = `
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <path d="M32 2 C20 12, 6 28, 10 42 C14 56, 32 62, 48 52 C60 42, 44 18, 32 2 Z"
+        fill="#ff9acb"/>
+</svg>
+`;
+
+for (let i = 0; i < 12; i++) {
+  const petal = document.createElement("div");
+  petal.className = "petal";
+  petal.innerHTML = petalSVG;
+
+  petal.style.left = Math.random() * 100 + "vw";
+  petal.style.width = (14 + Math.random() * 18) + "px";
+  petal.style.animationDuration = (7 + Math.random() * 6) + "s";
+
+  document.body.appendChild(petal);
+}
+</script>
+
+<section class="hero">
+  <div class="card">
+    <h1>Happy New Year,</h1>
+    <h1>Shai 🌸</h1>
+    <p>
+      I’ve known you for three years,  
+      and I’ve waited patiently for every moment  
+      that could bring us closer together.  
+      This year feels even more special because of you.
+    </p>
+
+    <div class="countdown">
+      <div class="time"><h2 id="days">00</h2><span>Days</span></div>
+      <div class="time"><h2 id="hours">00</h2><span>Hours</span></div>
+      <div class="time"><h2 id="minutes">00</h2><span>Minutes</span></div>
+    </div>
+
+    <p>
+      May this coming year gently lead me to you,  
+      with your favorite flowers along the way.
+    </p>
+  </div>
+</section>
+
+<section class="section" id="promise">
+  <h2>Migo's Promise 🌹</h2>
+  <p>
+    I promise to wait patiently, to care deeply,  
+    and to treasure every moment we’ve shared.  
+    When next year comes, I hope we can  
+    be together and create beautiful memories side by side.
+  </p>
+</section>
+
+<section class="question" id="futureQuestion">
+  <h2>Will you be by my side 'til u say yes, bebii?' 💗</h2>
+  <div class="buttons">
+    <button class="yes" onclick="yes()">Yes 💕</button>
+    <button class="no" onclick="no()">No 🙈</button>
+  </div>
+  <div id="response"></div>
+</section>
+
+<footer>
+  Made with pink roses & love 🌸
+</footer>
+
+<script>
+document.addEventListener("click", () => {
+  const music = document.getElementById("bgMusic");
+  if (music.paused) music.play();
+}, { once: true });
+
+const target = new Date("January 1, 2026 00:00:00").getTime();
+
+const countdownInterval = setInterval(() => {
+  const now = new Date().getTime();
+  const d = target - now;
+
+  document.getElementById("days").innerText = Math.max(Math.floor(d / (1000*60*60*24)),0);
+  document.getElementById("hours").innerText = Math.max(Math.floor((d / (1000*60*60)) % 24),0);
+  document.getElementById("minutes").innerText = Math.max(Math.floor((d / (1000*60)) % 60),0);
+
+  if (d <= 0) {
+    clearInterval(countdownInterval);
+    // Show promise & question with fade-slide animation
+    document.getElementById("promise").classList.add("showAnimated");
+    document.getElementById("futureQuestion").classList.add("showAnimated");
+  }
+}, 1000);
+
+function yes() {
+  document.getElementById("response").innerText =
+    "YEYYYY! don't forget our deal ha hehehehe, i like u so much my clingy bebi! 💖";
+}
+
+function no() {
+  document.getElementById("response").innerText =
+    "That’s okay hehe… I’ll still wish you a beautiful year 🌸";
+}
+</script>
+
+</body>
+</html>
